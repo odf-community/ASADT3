@@ -1,0 +1,15 @@
+[ScriptInfo]
+script_id      = "dmitry"   # Do NOT Edit
+script_version = "1.0.0"    # Do NOT Edit
+
+[ScriptEnablers] # Enables/Disables Script or Program Functions
+dmitry_enable   = "True"   # "True" or "False" | Enables The Host Command
+
+[ScriptOutput] # FileName With Extention (Output Directory Determined On Execute)
+dmitry_default_output = "dmitry_io.txt"
+
+
+
+# This is a .toml configuration file!
+# Please follow .toml configuration syntax when altering!
+# "True" & "False" are CASE SENSITIVE! Uppercase Letters Are Required!

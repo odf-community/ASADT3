@@ -1,0 +1,25 @@
+[ScriptInfo]
+script_id      = "nikto"    # Do NOT Edit
+script_version = "1.0.0"   # Do NOT Edit
+
+[ScriptEnablers] # Enables/Disables Script or Program Functions
+nikto_enable           = "True"   # "True" or "False" | Enables The Host Command
+nikto_defaultdisplay   = "P"      # Option: "1" "2" "3" "4" "D" "E" "P" "S" "V" | Changes STOUT View 
+nikto_follow3xredir    = "True"   # "True" or "False" | Nikto Will Follow Any 3xx Redirects
+nikto_maxscantime      = "1h"     # Ex. "1h" "30m" "2000s" | Sets Maximum Scan Time Per Host
+nikto_forcessl         = "False"  # "True" or "False" | Forces SSL Mode For Selected Port
+nikto_disablednslookup = "False"  # "True" or "False" | Disables DNS Lookups
+nikto_conntimeout      = "10"    # Default is "10s"  | Sets Connection Timeout
+nikto_usecookies       = "True"  # "True" or "False" | Uses Cookies From Requests In Future Requests
+nikto_nointeractive    = "False"  # "True" or "False" | Disables Interactive Features
+nikto_no404guess       = "False"  # "True" or "False" | Disables Guessing of a 404 Page.
+
+[ScriptOutput] # FileName With Extention (Output Directory Determined On Execute)
+nikto_output_format  = "csv" # | Available Formats: "csv" "json" "htm" "nbe" "sql" "txt" "xml"
+nikto_default_output = "nikto_output.csv"
+
+
+
+# This is a .toml configuration file!
+# Please follow .toml configuration syntax when altering!
+# "True" & "False" are CASE SENSITIVE! Uppercase Letters Are Required!

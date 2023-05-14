@@ -1,0 +1,25 @@
+[ScriptInfo]
+script_id      = "nmap"    # Do NOT Edit
+script_version = "1.0.1"   # Do NOT Edit
+
+[ScriptEnablers] # Enables/Disables Script or Program Functions
+nmap_enable               = "True"   # "True" or "False" | Enables The Host Command
+nmap_updatedb             = "True"   # "True" or "False" | Enables NSE Script Database Update Function
+nmap_fastscan_enable      = "True"   # "True" or "False" | Enables NMAP FastScan Function
+nmap_traceroute_enable    = "True"   # "True" or "False" | Enables NMAP Traceroute Function
+nmap_fullscan_enable      = "True"   # "True" or "False" | Enables NMAP FullScan Function
+nmap_nsescriptscan_enable = "True"   # "True" or "False" | Enables NMAP NSE Script Scan Function
+nmap_nsedebug_enable      = "False"  # "True" or "False" | Enables NMAP NSE Debug (NSE_ScriptTrace)
+
+
+[ScriptOutput] # FileName With Extention (Output Directory Determined On Execute)
+nmap_fastscan_output_filename      = "nmap-fastscan_output.txt"   
+nmap_traceroute_output_filename    = "nmap-traceroute_output.txt"
+nmap_fullscan_output_filename      = "nmap-fullscan_output.txt"
+nmap_nsescriptscan_output_filename = "nmap-nsescriptscan_output.txt"
+
+
+
+# This is a .toml configuration file!
+# Please follow .toml configuration syntax when altering!
+# "True" & "False" are CASE SENSITIVE! Uppercase Letters Are Required!
