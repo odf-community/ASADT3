@@ -28,6 +28,8 @@ if [ "$UID" = "0" ]; then
 
         exit 2
 
+    fi
+
 else
 
     echo ""

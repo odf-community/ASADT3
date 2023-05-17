@@ -1,6 +1,6 @@
 # ASADT | Assistive Search And Discovery Tool
-> Version: 1.0.4 <br>
-> Last Update: May 9th, 2023 <br>
+> Version: 1.0.5 <br>
+> Last Update: May 16th, 2023 <br>
 > [KaliOS](https://www.kali.org) & [ParrotOS](https://www.parrotsec.org) Compatible
 
 

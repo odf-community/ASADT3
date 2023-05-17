@@ -6,7 +6,7 @@
 
 ##################################################################################################
 ## Authors:                                                                                     ##
-## @odf-community - Authors_ID: 1728984 9990909                                                 ##
+## @odf-community - Authors_ID: 9990909                                                         ##
 ##################################################################################################
 
 
@@ -22,13 +22,33 @@ try:
     from termcolor import colored
 
     from asadt_py import prog_main as asadt3
-    from asadt_py import scantool
+    from asadt_py import scantool as scantool
     
 except:
 
     errortext = "Prog Error: Failed To Import Required Dependencies!"
     print("")
     print(colored(errortext, 'red', attrs=["bold", ]))
+    print("")
+    print(colored('Please Ensure You Have Properly Installed All Script Dependencies!', 'blue', attrs=["bold", ]))
+    print(colored('Includes: termcolor argparse PySimpleGUI', 'blue', attrs=["bold", ]))
+    print(colored('Try: sudo pip install -r requirements.txt', 'blue', attrs=["bold", ]))
+
+    raise SystemExit(2)
+
+try:
+
+    # Verify Module Root (scantool)
+    scantool.verify_module_integrity
+
+except:
+
+    print("")
+    print(colored('Prog Error: Could Not Verify Modules Integrity', color="red", attrs=["bold"]))
+    print(colored('Prog Error: Function "scantool.verify_module_integrity" did not complete sucessfully.', color="red", attrs=["bold"]))
+    print("")
+
+    raise SystemExit(2)
 
 ##############################################################
 
@@ -42,7 +62,7 @@ asadt3.checkperms() # Check SUID Status (UID On Execution Must = 0)
                     # This Will Disable The Requirement Of The Sudo Flag
 
 global configfile; configfile = os.getcwd() + "/config/scriptinfo.toml"
-global argument_parser; argument_parser = argparse.ArgumentParser()
+global argument_parser; argument_parser = argparse.ArgumentParser(description='Assistive Search And Discovery Tool Mark 3')
 
 try:
 
@@ -52,6 +72,8 @@ except:
 
     print("")
     print(colored('Prog Error: Failed To Capture Script Main Configuration @ config/scriptinfo.toml', color="red", attrs=["bold"]))
+    print(colored('Prog Error: "asadt.py" Cannot Be Called From Within A Different Working Directory, Please CD Into "ASADT3"', color="red", attrs=["bold"]))
+    print(colored('Help: Please Ensure Working Directory Includes Folders & Contents asadt_py, config & asadt.py', color="blue", attrs=["bold"]))
     print("")
 
     raise SystemExit(2)
@@ -67,20 +89,6 @@ else:
         global scripttitle_global; scripttitle_global = scriptname_global + ' ' + "Version " + scriptversion_global
         global scriptdesc_global; scriptdesc_global = scriptinfo["script_data"]["script_desc"]
         global scriptdesc_vcmd; scriptdesc_vcmd = scriptdesc_global + " " + scriptversion_global
-
-
-try:
-
-    # Verify Module Root (scantool)
-    scantool.verify_module_integrity
-
-except:
-
-    print("")
-    print(colored('Prog Error: Could Not Verify Modules Integrity', color="red", attrs=["bold"]))
-    print("")
-
-    raise SystemExit(2)
 
 ##############################################################
 
@@ -160,39 +168,31 @@ if args.scantool:
     if args.tool_name[0] == "nmap":
 
         scantool.execute(args.tool_name[0])
-    
+
+    elif args.tool_name[0] == "assetfinder":
+
+        scantool.execute(args.tool_name[0])
+
+    elif args.tool_name[0] == "dmitry":
+
+        scantool.execute(args.tool_name[0])
+
+    elif args.tool_name[0] == "dnsmap":
+
+        scantool.execute(args.tool_name[0])
+
+    elif args.tool_name[0] == "nikto":
+
+        scantool.execute(args.tool_name[0])
+
     else:
 
-        if args.tool_name[0] == "assetfinder":
+        asadt3.showbanner(scriptversion_global)
 
-            scantool.execute(args.tool_name[0])
+        errortext = " Error: Module 'scantool' Does Not Accept Positional Arg {toolname}: " + args.tool_name[0]
+        print(colored(errortext, color="red", attrs=["bold"]))
 
-        else:
-
-            if args.tool_name[0] == "dmitry":
-
-                scantool.execute(args.tool_name[0])
-
-            else:
-
-                if args.tool_name[0] == "dnsmap":
-
-                    scantool.execute(args.tool_name[0])
-
-                else:
-
-                    if args.tool_name[0] == "nikto":
-
-                        scantool.execute(args.tool_name[0])
-
-                    else:
-
-                        asadt3.showbanner(scriptversion_global)
-
-                        errortext = " Error: Module 'scantool' Does Not Accept Positional Arg {toolname}: " + args.tool_name[0]
-                        print(colored(errortext, color="red", attrs=["bold"]))
-
-                        raise SystemExit(2)
+        raise SystemExit(2)
     
 if args.tools:
 

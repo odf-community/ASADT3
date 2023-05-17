@@ -1,3 +1,14 @@
 termcolor
 argparse
 PySimpleGUI
+
+## This Script Also Requires APT Packages 
+## Generally Found In Kali Linux & Parrot 
+## Linux APT Repositories
+
+## Those Dependencies Include
+## nmap
+## dmitry
+## dnsmap
+## nikto
+## assetfinder

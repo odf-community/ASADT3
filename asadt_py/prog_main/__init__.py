@@ -50,7 +50,7 @@ def checkperms():
 
             localscript = os.getcwd() + "/asadt.py"
 
-            command_to_execute = "nano --nonewlines --softwrap +40 " + localscript
+            command_to_execute = "nano --nonewlines --softwrap +46 " + localscript
             subprocess.call(command_to_execute, shell=True)
 
             raise SystemExit(3)
