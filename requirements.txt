@@ -6,9 +6,5 @@ PySimpleGUI
 ## Generally Found In Kali Linux & Parrot 
 ## Linux APT Repositories
 
-## Those Dependencies Include
+## Those Dependencies Include:
 ## nmap
-## dmitry
-## dnsmap
-## nikto
-## assetfinder

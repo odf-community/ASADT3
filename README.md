@@ -1,11 +1,15 @@
 # ASADT | Assistive Search And Discovery Tool
-> Version: 1.0.5 <br>
-> Last Update: May 16th, 2023 <br>
+> Version: 1.0.6 <br>
+> Last Update: May 28th, 2023 <br>
 > [KaliOS](https://www.kali.org) & [ParrotOS](https://www.parrotsec.org) Compatible
 
 
-# **WARNING**
-ASADT MARK THREE IS CURRENTLY UNDER DEVELOPMENT. THE RESULTING CODE YOU SEE IN THIS REPOSITORY IS INCOMPLETE, AND MAY NOT SUITE YOUR CURRENT NEEDS. IT IS ONLY ONLINE FOR TESTING PURPOSES.
+# **Major Updates**
+
+We have been working to make ASADT more advanced. These updates have drastically changed the structure of the respository. We have removed support for the majority of tools to allow a new wave of more advanced tool execution. We hope you find these updates helpful in you're use of our tool, and we will continue to revive the removed tools as time continues. <br>
+> As of release version 1.0.6, the only tools ASADT can operate are; nmap. <br>
+> We will soon be adding the removed tools, please note that the development will take time. <br>
+> (watch) the repository, or, utilize the `--update` command to download and update your version of ASADT
 
 ## Project Description
 
@@ -15,7 +19,12 @@ With ASADT, you no longer need to manually type lengthy commands or remember com
 
 Key features of ASADT:
 
-- **User-Friendly Toolkit**: ASADT incorporates a GUI frontend, powered by PySimpleGUI, that guides users through the process of configuring and executing programs and scripts. This intuitive interface eliminates the need for extensive command-line knowledge and enhances overall user experience.
+- **NEW: ToolTip Help View**: ASADT offers a tooltip view for each input value, viewable by hovering over any text field! Try it out now in release version 1.0.6!
+![](.github/images/tooltip_help_example.png)
+
+- **NEW: Command Generation**: ASADT now generates commands based on user input, allowing for a more advanced execution ability! (NOTE: This is a beta feature and may not properly operate. Report any issues [here](https://github.com/odf-community/ASADT3/issues))
+
+- **User-Friendly Toolkit**: ASADT incorporates a GUI frontend, powered by [PySimpleGUI](https://github.com/PySimpleGUI/PySimpleGUI), that guides users through the process of configuring and executing programs and scripts. This intuitive interface eliminates the need for extensive command-line knowledge and enhances overall user experience.
 
 - **Flexible Configuration**: The script allows users to customize and configure various parameters for each program or script. By interacting with the GUI, users can easily input the required data and tailor the execution according to their specific needs.
 
@@ -45,7 +54,7 @@ sudo pip install -r requirements.txt
 > If changing your operating system is not an option, We suggest you consider use <br>
 > of [KaliOS's Docker](https://hub.docker.com/search?q=kalilinux&operating_system=linux%2Cwindows&architecture=arm%2Carm64%2Camd64) Lightweight Images. <br> <br>
 > Required APT Packages (As Of Version 1.0.0): <br>
-> apt, python3, python3-pip, nmap, dnsmap, dmitry, assetfinder, nikto
+> apt, python3, python3-pip, nmap
 
 
 ## Usage
@@ -72,5 +81,4 @@ The command will display the help menu, which provides a comprehensive list of a
 
 > Please Note: It is recommended to run ASADT with administrative privileges (`sudo`) to ensure proper execution of certain tools and scripts. However, it is possible to prevent ASADT from requesting these permissions. If you would like to utilize this option, it is available by executing `asadt.py` without the `sudo` flag and following the on-screen instructions. It is worth mentioning that Python modules that are installed using the `pip install -r requirements.txt` are place in the local account of execution. It is suggested to install these packages both as a root user and as a local user if you chose to utilize the `sudo disengage` option, due to changes in `site-packages` area when executing as 2 different parties.
 
-For any issues, feedback, or feature requests, please refer to the [GitHub Repository](https://github.com/odf-community/ASADT3) and create an issue. We welcome contributions and collaboration from the open-source community to enhance ASADT and make it even more robust and user-friendly.
-
+For any issues, feedback, or feature requests, please refer to the [GitHub Discussions Channel](https://github.com/odf-community/ASADT3/discussions) or the [GitHub Issues Channel](https://github.com/odf-community/ASADT3/issues) and create an issue. We welcome contributions and collaboration from the open-source community to enhance ASADT and make it even more robust and user-friendly.

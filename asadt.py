@@ -4,15 +4,26 @@
 ## ASADT Mark III Python ##
 ###########################
 
+#############################################################################
+#      This Repository Utilizes The GNU General Public License v3           #
+#                                                                           #
+#     As a sole actor, you are authorized to redistribute the data          #
+#    of this repository as long as you follow the proper guidelines         #
+# of the GNU GPLv3 License, and you do not redistribute for the purpose     #
+# of financial, commerciality, marketability, or otherwise profitable gain  #
+#############################################################################
+
 ##################################################################################################
-## Authors:                                                                                     ##
-## @odf-community - Authors_ID: 9990909                                                         ##
+## Author: @odf-community                                                                       ##
+##                                                                                              ##
+## ODFSEC Developer ID's: 9990909 (secops@odfsec.org)                                           ##
+## Signed GPG ID's: 685619EDCE460E26 (secops@odfsec.org)                                        ##
 ##################################################################################################
 
 
 
-## Import External Modules ##
-##############################################################
+## Import Local Modules ##
+##################################################################################################
 
 try:
 
@@ -21,81 +32,56 @@ try:
     import argparse
     from termcolor import colored
 
-    from asadt_py import prog_main as asadt3
-    from asadt_py import scantool as scantool
-    
-except:
-
-    errortext = "Prog Error: Failed To Import Required Dependencies!"
-    print("")
-    print(colored(errortext, 'red', attrs=["bold", ]))
-    print("")
-    print(colored('Please Ensure You Have Properly Installed All Script Dependencies!', 'blue', attrs=["bold", ]))
-    print(colored('Includes: termcolor argparse PySimpleGUI', 'blue', attrs=["bold", ]))
-    print(colored('Try: sudo pip install -r requirements.txt', 'blue', attrs=["bold", ]))
-
-    raise SystemExit(2)
-
-try:
-
-    # Verify Module Root (scantool)
-    scantool.verify_module_integrity
+    from libasadt import prog_main as asadt3
+    from libasadt import scantool 
 
 except:
 
     print("")
-    print(colored('Prog Error: Could Not Verify Modules Integrity', color="red", attrs=["bold"]))
-    print(colored('Prog Error: Function "scantool.verify_module_integrity" did not complete sucessfully.', color="red", attrs=["bold"]))
+    print(colored('Python3 Import Error!', color='red', attrs=["bold"]))
+    print(colored('There was an error importing one or more required script modules!', color='red', attrs=["bold"]))
+    print("")
+    print(colored('Error Information: Execute setup.sh To Fix This Issue', color='blue', attrs=["bold"]))
     print("")
 
     raise SystemExit(2)
 
-##############################################################
+##################################################################################################
 
 
 
-## Capture Configuration ##
-##############################################################
+## Parse Script Host Configuration ##
+##################################################################################################
 
 asadt3.checkperms() # Check SUID Status (UID On Execution Must = 0)
-                    # Comment This Line Out To Disable SUID Checking
+                    # Comment This Line Out To Enable Sudo Disengage Mode
                     # This Will Disable The Requirement Of The Sudo Flag
 
-global configfile; configfile = os.getcwd() + "/config/scriptinfo.toml"
-global argument_parser; argument_parser = argparse.ArgumentParser(description='Assistive Search And Discovery Tool Mark 3')
+global hostscript_name
+global hostscript_version
+global hostscript_description
+global hostscript_readmefile
+global hostscript_authors
+global version_output
 
-try:
+hostscript_name, hostscript_version, hostscript_description, hostscript_readmefile, hostscript_authors = asadt3.get_host_configuration()
 
-    checkfile_configurations = open(configfile, "r")
+version_output = hostscript_name + " | v" + hostscript_version + ' [GPG SIG: ' + hostscript_authors + "]"
 
-except:
-
-    print("")
-    print(colored('Prog Error: Failed To Capture Script Main Configuration @ config/scriptinfo.toml', color="red", attrs=["bold"]))
-    print(colored('Prog Error: "asadt.py" Cannot Be Called From Within A Different Working Directory, Please CD Into "ASADT3"', color="red", attrs=["bold"]))
-    print(colored('Help: Please Ensure Working Directory Includes Folders & Contents asadt_py, config & asadt.py', color="blue", attrs=["bold"]))
-    print("")
-
-    raise SystemExit(2)
-
-else:
-
-    with open(configfile, 'rb') as cnf_scriptinfo:
-
-        global scriptinfo; scriptinfo = tomllib.load(cnf_scriptinfo)
-
-        global scriptname_global; scriptname_global = scriptinfo["script_data"]["script_name"]
-        global scriptversion_global; scriptversion_global = scriptinfo["script_data"]["script_version"]
-        global scripttitle_global; scripttitle_global = scriptname_global + ' ' + "Version " + scriptversion_global
-        global scriptdesc_global; scriptdesc_global = scriptinfo["script_data"]["script_desc"]
-        global scriptdesc_vcmd; scriptdesc_vcmd = scriptdesc_global + " " + scriptversion_global
-
-##############################################################
+##################################################################################################
 
 
 
-## Argument Parser ##
-##############################################################
+## Parse Script Arguments ##
+##################################################################################################
+
+global argument_parser
+
+argument_parser = argparse.ArgumentParser(
+                                          description='Assistive Search And Discovery Tool Mark 3',
+                                          epilog='Thank You For Using the ASADT MK III Beta Script'
+                                         )
+
 
 argument_parser.add_argument(
 
@@ -141,8 +127,8 @@ argument_parser.add_argument(
 
     "--version",
     action="version",
-    version=scriptdesc_vcmd,
-    help="Show Program's Version Number + Name"
+    version=version_output,
+    help="Show Program's Name, Version & Authors"
 
 )
 
@@ -150,20 +136,24 @@ args = argument_parser.parse_args()
 
 if args.v:
 
-    asadt3.showbanner(scriptversion_global)
+    asadt3.showbanner(hostscript_version, formattype="normal")
 
-    raise SystemExit(1)
+    raise SystemExit(0)
 
 if args.scantool:
 
     if not args.tool_name:
 
-        asadt3.showbanner(scriptversion_global)
+        asadt3.showbanner(hostscript_version, formattype="short")
 
         print(colored('Error: Missing Positional Arg @ args.tool_name', color="red", attrs=["bold"]))
         print(colored('Help: Execute asadt.py -h or --help', color="blue", attrs=["bold"]))
 
         raise SystemExit(2)
+    
+    else:
+
+        asadt3.showbanner(hostscript_version,formattype="short")
 
     if args.tool_name[0] == "nmap":
 
@@ -187,10 +177,11 @@ if args.scantool:
 
     else:
 
-        asadt3.showbanner(scriptversion_global)
+        asadt3.showbanner(hostscript_version, formattype="short")
 
-        errortext = " Error: Module 'scantool' Does Not Accept Positional Arg {toolname}: " + args.tool_name[0]
+        errortext = " Error: Module 'scantool' Does Not Accept Positional Arg {tool_name}: " + args.tool_name[0]
         print(colored(errortext, color="red", attrs=["bold"]))
+        print(colored(' Help: Use Switch "--tools" To Se Viable Tool Names!', color="blue", attrs=["bold"]))
 
         raise SystemExit(2)
     
@@ -198,25 +189,26 @@ if args.tools:
 
     if args.tool_name:
 
-        asadt3.showbanner(scriptversion_global)
+        asadt3.showbanner(hostscript_version, formattype="short")
 
         errortext = " Error: Switch '--tools' Does Not Accept Positional Arg {toolname}: " + args.tool_name[0]
         print(colored(errortext, color="red", attrs=["bold"]))
+        print(colored(' The Switch "--tools" Does Not Accept Any Positional Arguments, Please Remove Positional Arguments!', color="blue", attrs=["bold"]))
 
         raise SystemExit(2)
     
     else:
         
-        asadt3.showbanner(scriptversion_global)
-        asadt3.listtools(scriptversion_global)
+        asadt3.showbanner(hostscript_version, formattype="short")
+        asadt3.listtools(hostscript_version)
 
         raise SystemExit(1)
-
+    
 if args.updatechk:
 
     if args.tool_name:
 
-        asadt3.showbanner(scriptversion_global)
+        asadt3.showbanner(hostscript_version, formattype="short")
 
         errortext = " Error: Argument '--updatechk' Does Not Accept args.tool_name: " + args.tool_name[0]
         print(colored(errortext, color="red", attrs=["bold"]))
@@ -225,7 +217,7 @@ if args.updatechk:
     
     else:
 
-        asadt3.showbanner(scriptversion_global)
+        asadt3.showbanner(hostscript_version, formattype="short")
 
         asadt3.DownloadUpdate("https://raw.githubusercontent.com/odf-community/ASADT3/main/config/scriptinfo.toml")
 
@@ -263,9 +255,9 @@ if args.updatechk:
 
                     os.remove(newchkfile)
 
-                    raise SystemExit(3)
+                    raise SystemExit(2)
 
-            if scriptversion_new == scriptversion_global:
+            if scriptversion_new == hostscript_version:
 
                 print("")
                 print(colored(' Update Check: No Updates Were Reported From Github!', color="green", attrs=["bold"]))
@@ -273,19 +265,22 @@ if args.updatechk:
 
                 os.remove(newchkfile)
 
-                raise SystemExit(1)
+                raise SystemExit(0)
             
             else:
 
-                versionupdate = " Update Check: An Update For ASADT MK III Is Available! " + scriptversion_global + " => " + scriptversion_new
-                downloadid = " Download Here: " + "https://github.com/odf-community/ASADT3/releases/tag/v" + scriptversion_new
-
+                versionupdate = " Update Check: An Update For ASADT MK III Is Available! " + "v" + hostscript_version + " => " + "v" + scriptversion_new
+                downloadid = " Download Here: " + "https://github.com/odf-community/ASADT3/archive/refs/tags/v" + scriptversion_new + ".zip"
+                infolink = " Read More: " + "https://github.com/odf-community/ASADT3/releases/tag/v" + scriptversion_new
+                repolink = " Clone Me!: git clone https://github.com/odf-community/ASADT3.git"
+                
                 print("")
                 print(colored(versionupdate, color="yellow", attrs=["bold"]))
-                print(colored(downloadid, color="blue", attrs=["bold"]))
+                print("")
+                print(colored(downloadid, color="green", attrs=["bold"]))
+                print(colored(repolink, color="green", attrs=["bold"]))
+                print(colored(infolink, color="blue", attrs=["bold"]))
 
                 os.remove(newchkfile)
 
-                raise SystemExit(1)
-
-##############################################################
+                raise SystemExit(0)
