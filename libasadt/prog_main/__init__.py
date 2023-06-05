@@ -2,10 +2,20 @@
 ## ASADT Mark III Python ##
 ###########################
 
+#############################################################################
+# This Repository Utilizes The GNU General Public License v3                #
+#                                                                           #
+# As a sole actor, you are authorized to redistribute the data              #
+# of this repository as long as you follow the proper guidelines listed     #
+# within the GNU GPLv3 License, and you do not redistribute for the purpose #
+# of financial, commerciality, marketability, or otherwise profitable gain  #
+#############################################################################
+
 ##################################################################################################
 ## Author: @odf-community                                                                       ##
 ##                                                                                              ##
-## ODFSEC Developer Name(s): Trippyx9                                                           ##
+## ODFSEC Developer ID's: 9990909 (secops@odfsec.org)                                           ##
+## Signed GPG ID's: 685619EDCE460E26 (secops@odfsec.org)                                        ##
 ##################################################################################################
 
 
@@ -39,6 +49,8 @@ def checkperms():
        
        admin_bool = "True"
 
+       return admin_bool
+
     else:
         
         print("")
@@ -59,14 +71,16 @@ def checkperms():
 
             localscript = os.getcwd() + "/asadt.py"
 
-            command_to_execute = "nano  --linenumbers --nonewlines --softwrap +56 " + localscript
+            command_to_execute = "nano  --linenumbers --nonewlines --softwrap +56 " + str(f'"{localscript}"')
             subprocess.call(command_to_execute, shell=True)
 
-            raise SystemExit(3)
+            os.chmod(localscript, 0o751)
+
+            raise SystemExit(0)
 
         else:
 
-            raise SystemExit(1)
+            raise SystemExit(2)
 
 
 

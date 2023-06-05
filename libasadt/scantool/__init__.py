@@ -1,11 +1,30 @@
+###########################
+## ASADT Mark III Python ##
+###########################
+
+#############################################################################
+# This Repository Utilizes The GNU General Public License v3                #
+#                                                                           #
+# As a sole actor, you are authorized to redistribute the data              #
+# of this repository as long as you follow the proper guidelines listed     #
+# within the GNU GPLv3 License, and you do not redistribute for the purpose #
+# of financial, commerciality, marketability, or otherwise profitable gain  #
+#############################################################################
+
+##################################################################################################
+## Author: @odf-community                                                                       ##
+##                                                                                              ##
+## ODFSEC Developer ID's: 9990909 (secops@odfsec.org)                                           ##
+## Signed GPG ID's: 685619EDCE460E26 (secops@odfsec.org)                                        ##
+##################################################################################################
+
+
 
 global module_name
 global module_version
 
 module_name = 'scantool'
-module_version = 'v1.1.0'
-
-
+module_version = 'v2.0.0'
 
 try:
 
@@ -39,13 +58,14 @@ def get_tool_configuration(tool_name):
         
         current_script_configuration = tomllib.load(cnf_currenttool)
 
-    if tool_name == "nmap":
-
-
-
         script_name = current_script_configuration["ScriptInfo"]["script_id"]
         script_version = current_script_configuration["ScriptInfo"]["script_version"]
 
+        print(colored(f'  Initializing TOML Configuration For: {script_name}-v{script_version} ({module_name}-{module_version}) \n', color="blue", attrs=["bold"]))
+
+    if tool_name == "nmap":
+
+        
         global scriptenabler_nmap_host
         global scriptenabler_nmap_updatedb
         global scriptenabler_nmap_nsescriptscan
@@ -136,26 +156,34 @@ def edit_tool_configuration(tool_name):
 
     config_file_id = os.getcwd() + "/config/" + module_name + "/" + tool_name + ".toml"
 
-    command_to_execute = "nano --nonewlines +5 " + config_file_id
+    print(colored(f"\n  Editing TOML Configuration For: {script_name}-v{script_version} ({module_name}-{module_version})", color="blue", attrs=["bold"]))
+
+    host_command = "nano --nonewlines --linenumbers"
+    command_to_execute = host_command + " " + str(f'"{config_file_id}"')
     subprocess.call(command_to_execute, shell=True)
+
+    os.chmod(config_file_id, 0o751)
+    
+    print(colored(f"\n\n  TOML Configuration File Changes For: {script_name}-v{script_version} ({module_name}-{module_version}) Has Been Sucessfully Saved!", color="yellow", attrs=["bold"]))
+    print(colored(f"\n  File Name: {config_file_id} \n  File RW Permissions: 0o751", color="blue", attrs=["bold"]))
 
     raise SystemExit(0)
 
 def execute(tool_name):
 
+    global host_command
     global output_directory
     global targetaddress
     global targetport
-    global host_command
+
     global traceroute_cmd
 
     host_command = tool_name + " "
 
     get_tool_configuration(tool_name)
-
-    print("")
-    print(colored('Happy Hacking! :P', color='red', attrs=["bold"]))
-    print("")
+    
+    print(colored(f'  [MOD EXEC] Now Executing Module:    [{module_name} ({module_version})] \n                           SubModule: [{script_name} (v{script_version})]', color="red", attrs=["bold"]))
+    print(colored('\n  Happy Hacking! :P', color='red', attrs=["bold"]))
 
     if tool_name == "nmap":
 
@@ -620,8 +648,6 @@ def execute(tool_name):
             
             if event == "Quit Program" or event == guihandler.WIN_CLOSED:
 
-
-
                 break
 
             elif event == "Edit Configuration":
@@ -641,6 +667,7 @@ def execute(tool_name):
                 targetaddress = values[0]
                 targetport = values[1]
 
+                
                 if not values[0]:
 
                     check_output(errorid='notarget')
@@ -669,7 +696,6 @@ def execute(tool_name):
                         values[2] = ''
 
                 print(colored('Generating Command... Please Wait...', color='blue', attrs=["bold"]))
-                print("")
                 
                 if values[1]:
 
@@ -789,9 +815,13 @@ def execute(tool_name):
 
                     host_command = host_command + "--privileged "
 
-                else:
+                elif scriptenabler_nmap_permuser == "False":
 
                     host_command = host_command + "--unprivileged "
+
+                else:
+
+                    host_command = host_command
 
                 if values[15]:
 
@@ -805,7 +835,7 @@ def execute(tool_name):
 
                 if scriptenabler_nmap_updatedb == "True":
 
-                    print(colored(f'\nChecking For NSE Script Database Updates "{targetaddress}"', color='red', attrs=["bold"]))
+                    print(colored(f'\nChecking For NSE Script Database Updates', color='red', attrs=["bold"]))
                     print(colored(f'━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n', color='red', attrs=["bold"]))
 
                     command_to_execute = tool_name + " --script-updatedb"
@@ -813,8 +843,8 @@ def execute(tool_name):
 
                 if traceroute_cmd == "True":
 
-                    print(colored(f'\nGathering Traceroute Data For Target "{targetaddress}"', color='red', attrs=["bold"]))
-                    print(colored(f'━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n', color='red', attrs=["bold"]))
+                    print(colored(f'\nGathering Traceroute Data \nTarget: "{targetaddress}"', color='red', attrs=["bold"]))
+                    print(colored(f'━━━━━━━━━━━━━━━━━━━━━━━━━━━\n', color='red', attrs=["bold"]))
 
                     command_to_execute = tool_name + " --traceroute " + targetaddress
                     subprocess.call(command_to_execute, shell=True)
@@ -823,10 +853,10 @@ def execute(tool_name):
 
                     command_to_execute = host_command
 
-                    print(colored(f'\nExecuting Full Scan Against "{targetaddress}"', color='red', attrs=["bold"]))
-                    print(colored(f'━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n', color='red', attrs=["bold"]))
+                    print(colored(f'\nExecuting Full Scan \nTarget: "{targetaddress}"', color='red', attrs=["bold"]))
+                    print(colored(f'━━━━━━━━━━━━━━━━━━━━━\n\n', color='red', attrs=["bold"]))
                     print(colored(f'{command_to_execute}\n', color='red', attrs=["bold"]))
                     
                     subprocess.call(command_to_execute, shell=True)
 
-                raise SystemExit(0)
+                break

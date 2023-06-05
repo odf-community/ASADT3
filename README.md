@@ -1,13 +1,13 @@
 # ASADT | Assistive Search And Discovery Tool
-> Version: 1.0.6 <br>
-> Last Update: May 28th, 2023 <br>
+> Version: 1.0.7 <br>
+> Last Update: June 5th, 2023 <br>
 > [KaliOS](https://www.kali.org) & [ParrotOS](https://www.parrotsec.org) Compatible
 
 
 # **Major Updates**
 
 We have been working to make ASADT more advanced. These updates have drastically changed the structure of the respository. We have removed support for the majority of tools to allow a new wave of more advanced tool execution. We hope you find these updates helpful in you're use of our tool, and we will continue to revive the removed tools as time continues. <br>
-> As of release version 1.0.6, the only tools ASADT can operate are; nmap. <br>
+> As of release version 1.0.7, the only tools ASADT can operate are; nmap. <br>
 > We will soon be adding the removed tools, please note that the development will take time. <br>
 > (watch) the repository, or, utilize the `--update` command to download and update your version of ASADT
 
@@ -77,7 +77,15 @@ options:
   --version    Show Program's Version Number + Name
 ````
 
-The command will display the help menu, which provides a comprehensive list of available options and functionalities. Refer to the help menu for detailed instructions on using ASADT effectively.
+To execute a tool (or module:submodule pair) using ASADT, execute the following command:
+
+````
+sudo ./asadt.py {module_name} {tool_name}
+
+Ex: sudo ./asadt.py --scantool nmap
+````
+
+The 1st command above will display the help menu, which provides a comprehensive list of available options and functionalities. Refer to the help menu for detailed instructions on using ASADT effectively.
 
 > Please Note: It is recommended to run ASADT with administrative privileges (`sudo`) to ensure proper execution of certain tools and scripts. However, it is possible to prevent ASADT from requesting these permissions. If you would like to utilize this option, it is available by executing `asadt.py` without the `sudo` flag and following the on-screen instructions. It is worth mentioning that Python modules that are installed using the `pip install -r requirements.txt` are place in the local account of execution. It is suggested to install these packages both as a root user and as a local user if you chose to utilize the `sudo disengage` option, due to changes in `site-packages` area when executing as 2 different parties.
 

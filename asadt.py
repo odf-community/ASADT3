@@ -5,11 +5,11 @@
 ###########################
 
 #############################################################################
-#      This Repository Utilizes The GNU General Public License v3           #
+# This Repository Utilizes The GNU General Public License v3                #
 #                                                                           #
-#     As a sole actor, you are authorized to redistribute the data          #
-#    of this repository as long as you follow the proper guidelines         #
-# of the GNU GPLv3 License, and you do not redistribute for the purpose     #
+# As a sole actor, you are authorized to redistribute the data              #
+# of this repository as long as you follow the proper guidelines listed     #
+# within the GNU GPLv3 License, and you do not redistribute for the purpose #
 # of financial, commerciality, marketability, or otherwise profitable gain  #
 #############################################################################
 
@@ -103,7 +103,7 @@ argument_parser.add_argument(
 
     "--updatechk",
     action="store_true",
-    help="Checks For Updates By Downloading The Newest ScriptInfo Configuration"
+    help="Checks For Updates By Downloading The Newest ScriptInfo Configuration From GitHub"
 
 )
 
@@ -155,35 +155,34 @@ if args.scantool:
 
         asadt3.showbanner(hostscript_version,formattype="short")
 
-    if args.tool_name[0] == "nmap":
+        if args.tool_name[0] == "nmap":
 
-        scantool.execute(args.tool_name[0])
+            scantool.execute(args.tool_name[0])
 
-    elif args.tool_name[0] == "assetfinder":
+        elif args.tool_name[0] == "assetfinder":
 
-        scantool.execute(args.tool_name[0])
+            scantool.execute(args.tool_name[0])
 
-    elif args.tool_name[0] == "dmitry":
+        elif args.tool_name[0] == "dmitry":
 
-        scantool.execute(args.tool_name[0])
+            scantool.execute(args.tool_name[0])
 
-    elif args.tool_name[0] == "dnsmap":
+        elif args.tool_name[0] == "dnsmap":
 
-        scantool.execute(args.tool_name[0])
+            scantool.execute(args.tool_name[0])
 
-    elif args.tool_name[0] == "nikto":
+        elif args.tool_name[0] == "nikto":
 
-        scantool.execute(args.tool_name[0])
+            scantool.execute(args.tool_name[0])
 
-    else:
+        else:
 
-        asadt3.showbanner(hostscript_version, formattype="short")
+            asadt3.showbanner(hostscript_version, formattype="short")
 
-        errortext = " Error: Module 'scantool' Does Not Accept Positional Arg {tool_name}: " + args.tool_name[0]
-        print(colored(errortext, color="red", attrs=["bold"]))
-        print(colored(' Help: Use Switch "--tools" To Se Viable Tool Names!', color="blue", attrs=["bold"]))
+            print(colored(f'  Error: Invalid Positional Argument: {args.tool_name[0]}', color="red", attrs=["bold"]))
+            print(colored(' Help: Use Switch "--tools" To Se Viable Tool Names For This Module!', color="blue", attrs=["bold"]))
 
-        raise SystemExit(2)
+            raise SystemExit(2)
     
 if args.tools:
 
@@ -191,9 +190,9 @@ if args.tools:
 
         asadt3.showbanner(hostscript_version, formattype="short")
 
-        errortext = " Error: Switch '--tools' Does Not Accept Positional Arg {toolname}: " + args.tool_name[0]
-        print(colored(errortext, color="red", attrs=["bold"]))
-        print(colored(' The Switch "--tools" Does Not Accept Any Positional Arguments, Please Remove Positional Arguments!', color="blue", attrs=["bold"]))
+         
+        print(colored(f'  Error: Switch "--tools" Does Not Accept Positional Arg {args.tool_name[0]}', color="red", attrs=["bold"]))
+        print(colored('  The Switch "--tools" Does Not Accept Any Positional Arguments, Please Remove Positional Arguments!', color="blue", attrs=["bold"]))
 
         raise SystemExit(2)
     
@@ -210,9 +209,9 @@ if args.updatechk:
 
         asadt3.showbanner(hostscript_version, formattype="short")
 
-        errortext = " Error: Argument '--updatechk' Does Not Accept args.tool_name: " + args.tool_name[0]
-        print(colored(errortext, color="red", attrs=["bold"]))
-
+        print(colored(f'  Error: Argument "--updatechk" Does Not Accept Positional Arg {args.tool_name[0]}', color="red", attrs=["bold"]))
+        print(colored('  The Switch "--updatechk" Does Not Accept Any Positional Arguments, Please Remove Positional Arguments!', color="blue", attrs=["bold"]))
+        
         raise SystemExit(2)
     
     else:
@@ -229,9 +228,7 @@ if args.updatechk:
 
         except:
 
-            print("")
-            print(colored('Prog Error: Failed To Capture Script Main Configuration @ .newversion_scriptinfo.toml', color="red", attrs=["bold"]))
-            print("")
+            print(colored('\n  URL Capture Error: Failed To Capture Script Main Configuration @ {newchkfile}', color="red", attrs=["bold"]))            
 
             raise SystemExit(2)
 
@@ -249,9 +246,7 @@ if args.updatechk:
                 
                 except:
 
-                    print("")
-                    print(colored(' Update Check: Unable To Parse New Configuration... Not ".toml"???', color="red", attrs=["bold"]))
-                    print("")
+                    print(colored('\n  Update Check: Unable To Parse New Configuration... Not ".toml" Syntax???', color="red", attrs=["bold"]))
 
                     os.remove(newchkfile)
 
@@ -260,7 +255,7 @@ if args.updatechk:
             if scriptversion_new == hostscript_version:
 
                 print("")
-                print(colored(' Update Check: No Updates Were Reported From Github!', color="green", attrs=["bold"]))
+                print(colored('  Update Check: No Updates Were Reported From Github!', color="green", attrs=["bold"]))
                 print("")
 
                 os.remove(newchkfile)
@@ -269,14 +264,13 @@ if args.updatechk:
             
             else:
 
-                versionupdate = " Update Check: An Update For ASADT MK III Is Available! " + "v" + hostscript_version + " => " + "v" + scriptversion_new
-                downloadid = " Download Here: " + "https://github.com/odf-community/ASADT3/archive/refs/tags/v" + scriptversion_new + ".zip"
-                infolink = " Read More: " + "https://github.com/odf-community/ASADT3/releases/tag/v" + scriptversion_new
-                repolink = " Clone Me!: git clone https://github.com/odf-community/ASADT3.git"
+                versionupdate = "  Update Check: An Update For ASADT MK III Is Available! " + "v" + hostscript_version + " => " + "v" + scriptversion_new
+                downloadid = "  Download Here: " + "https://github.com/odf-community/ASADT3/archive/refs/tags/v" + scriptversion_new + ".zip"
+                infolink = "  Read More: " + "https://github.com/odf-community/ASADT3/releases/tag/v" + scriptversion_new
+                repolink = "  Clone Me!: git clone https://github.com/odf-community/ASADT3.git"
                 
-                print("")
+                print('\n')
                 print(colored(versionupdate, color="yellow", attrs=["bold"]))
-                print("")
                 print(colored(downloadid, color="green", attrs=["bold"]))
                 print(colored(repolink, color="green", attrs=["bold"]))
                 print(colored(infolink, color="blue", attrs=["bold"]))

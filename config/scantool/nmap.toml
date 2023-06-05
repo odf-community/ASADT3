@@ -1,6 +1,6 @@
 [ScriptInfo]
 script_id      = "nmap"    # Do NOT Edit
-script_version = "1.0.1"   # Do NOT Edit
+script_version = "2.0.0"   # Do NOT Edit
 
 [ScriptEnablers] # Enables/Disables Script or Program Functions
 nmap_enable                 = "True"   # "True" or "False" | Enables The Host Command
